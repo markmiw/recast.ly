@@ -1,26 +1,45 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
+import VideoPlayer from './VideoPlayer.js';
 
 // console.log(VideoList);
-var App = () => (
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: exampleVideoData,
+      selectedVideo: exampleVideoData[0]
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  <div>
-    <nav className="navbar">
-      <div className="col-md-6 offset-md-3">
-        <div><h5><em>search</em> view goes here</h5></div>
-      </div>
-    </nav>
-    <div className="row">
-      <div className="col-md-7">
-        <div><h5><em>videoPlayer</em> view goes here</h5></div>
-      </div>
-      <div className="col-md-5">
-        <VideoList videos={exampleVideoData} />
-      </div>
-    </div>
-  </div>
+  handleClick(obj) {
+    this.setState({
+      selectedVideo: obj
+    });
+  }
 
-);
+  render() {
+    return (
+      <div>
+        <nav className="navbar">
+          <div className="col-md-6 offset-md-3">
+            <div><h5><em>search</em> view goes here</h5></div>
+          </div>
+        </nav>
+        <div className="row">
+          <div className="col-md-7">
+            <VideoPlayer singleVideo={this.state.selectedVideo} />
+          </div>
+          <div className="col-md-5">
+            <VideoList videos={this.state.data} handleClick={this.handleClick} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
 
 
 
