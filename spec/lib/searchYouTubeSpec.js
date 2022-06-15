@@ -70,7 +70,7 @@ describe('searchYouTube', function() {
   it('should GET videos with the same shape as `exampleVideoData`', function(done) {
     // We want this test to make a real AJAX request
     xhr.restore();
-
+    debugger;
     searchYouTube('react', (data) => {
       expect(hasSameShape(data, exampleVideoData)).to.be.true;
       done();

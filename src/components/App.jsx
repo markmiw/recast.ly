@@ -1,6 +1,8 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
+import Search from './Search.js';
 
 // console.log(VideoList);
 class App extends React.Component {
@@ -11,6 +13,20 @@ class App extends React.Component {
       selectedVideo: exampleVideoData[0]
     };
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount () {
+    this.getYouTubeVideos('cute cats');
+  }
+
+  getYouTubeVideos(query) {
+    searchYouTube(query, (videos) => {
+      this.setState({
+        data: videos,
+        selectedVideo: videos[0]
+      });
+    });
+
   }
 
   handleClick(obj) {
@@ -24,7 +40,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search method={this.getYouTubeVideos.bind(this)}/>
           </div>
         </nav>
         <div className="row">
@@ -36,7 +52,7 @@ class App extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
